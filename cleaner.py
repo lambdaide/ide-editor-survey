@@ -120,6 +120,124 @@ LANGUAGE_MAP = {
 }
 
 
+EDITOR_MAP = {
+    ('android studio', 'androidstudio'): ['Android Studio'],
+    ('appcode',): ['AppCode'],
+    ('aptana studio',): ['Aptana Studio'],
+    ('aquamacs', 'emacs', 'emacs slime'): ['Emacs'],
+    ('bbedit',): ['BBEdit'],
+    ('bim',): ['bim'],
+    ('bluej',): ['BlueJ'],
+    ('brackets',): ['Brackets'],
+    ('chocolat',): ['Chocolat'],
+    ('cloud9',): ['Cloud9'],
+    ('coda', 'coda 2'): ['Coda'],
+    ('code::blocks', 'code:blocks', 'codeblocks'): ['Code::Blocks'],
+    ('codelite',): ['CodeLite'],
+    ('crudzilla web application builder (our company product)',): ['crudzilla'],
+    ('ecilpse', 'eclipse'): ['Eclipse'],
+    ('ed',): ['ed'],
+    ('flash builder',): ['Flash Builder'],
+    ('geany',): ['Geany'],
+    ('gedit', 'sometimes gedit is faster',): ['Gedit'],
+    ('golite',): ['golite'],
+    ('gvim', 'vi', 'vim', 'vim (via terminal shell)', 'macvim'): ['vi'],
+    ('idea', 'intelli j idea', 'intellij', 'intellij idea', 'intellijidea'):
+     ['IntelliJ IDEA'],
+    ('idle'): ['IDLE'],
+    ('ipython notebook',): ['iPython Notebook'],
+    ('ise', 'powershell ise'): ['PowerShell ISE'],
+    ('jade',): ['Jade'],
+    ('jed',): ['JED'],
+    ('kate',): ['Kate'],
+    ('kdevelop',): ['KDevelop'],
+    ('komodo', 'komodo edit', 'komodo ide'): ['Komodo'],
+    ('light table', 'lighttable'): ['Light Table'],
+    ('liteide',): ['LiteIDE'],
+    ('mantis  studio',): ['MANTIS Studio'],
+    ('matlab',): ['MATLAB'],
+    ('mcedit',): ['MCEdit'],
+    ('mg', 'microemacs'): ['MicroEMACS'],
+    ('monodevelop', 'mono-d',): ['MonoDevelop'],
+    ('mousepad',): ['Mousepad'],
+    ('myeclipse', 'myeclipse for spring',): ['MyEclipse'],
+    ('mysql workbench',): ['MySQL Workbench'],
+    ('nano',): ['nano'],
+    ('netbeans', 'netbeens',): ['NetBeans'],
+    ('nitrous.io',): ['Nitrous.IO'],
+    ('notepad',): ['Notepad'],
+    ('notepad ++', 'notepad++'): ['Notepad++'],
+    ('notepad2',): ['Notepad2'],
+    ('objective-c',): ['objective-c'],
+    ('php storm', 'phpstorm',): ['PhpStorm'],
+    ('pl\sql developer',): ['PL/SQL Developer'],
+    ('powerbuilder',): ['PowerBuilder'],
+    ("programmer's notepad",): ["Programmer's Notepad"],
+    ('pspad',): ['PSPad'],
+    ('pycharm',): ['PyCharm'],
+    ('pyscripter',): ['pyscripter'],
+    ('qt creator', 'qt dev', 'qt-creator', 'qtcreator'): ['Qt Creator'],
+    ('rstudio',): ['RStudio'],
+    ('rubymine',): ['RubyMine'],
+    ('sas',): ['SAS'],
+    ('scratch',): ['Scratch'],
+    ('slickedit',): ['SlickEdit'],
+    ('spyder',): ['Spyder'],
+    ('sql pro',): ['SequelPro'],
+    ('subime', 'subime text','sublime', 'sublime 2', 'sublime text',
+     'sublime text  2', 'sublime text 2', 'sublime text 3',
+     'sublime text 3 beta', 'sublime text editor', 'sublime-text',
+     'sublimetext', 'sublimetext 2', 'sublimetext 3', 'sublimetext2',
+     'sublimetext3'): ['Sublime Text'],
+    ('text wrangler', 'textwrangle','textwrangler', ): ['TextWrangler'],
+    ('textadept',): ['Textadept'],
+    ('textmate', 'mate', 'text mate'): ['TextMate'],
+    ('textwrangler/bbedit',): ['TextWrangler', 'BBEdit'],
+    ('titanium studio',): ['Titanium Studio'],
+    ('visual studio', 'visual studio .net', 'visual studio 2012',
+     'visual studio express', 'visual studio.net', 'visual studios',
+     'visual studios 2010', 'visualstudio', 'ms visual studio',
+     'ms visual studio 2010', 'vb express 2008',
+     'sql server management studio', 'ssms'):
+    ['Visual Studio'],
+    ('web matrix',): ['WebMatrix'],
+    ('web storm', 'webstorm'): ['WebStorm'],
+    ('windriver workbench',): ['Wind River Workbench'],
+    ('wingide',): ['WingIDE'],
+    ('wps',): ['WPS Workbench'],
+    ('xamarin studio',): ['Xamarin Studio'],
+    ('xcode',): ['XCode'],
+    ('yi',): ['Yi'],
+    ('zend',): ['Zend Studio'],
+    ('zile',): ['Zile'],
+}
+
+
+VCS_MAP = {
+    ('bazaar', 'bzr',): ['Bazaar'],
+    ('ca workbench',): ['CA Workbench'],
+    ('clearcase',): ['ClearCase'],
+    ('copy and paste', "i don't use one", 'none','my own',
+     'omg i dont even know what that is sorry',
+     'zip & upload to google drive', 'osx', 'sharepoint',
+     'linux', 'debian',): ['None'],
+    ('cvs',): ['CVS'],
+    ('darcs',): ['darcs'],
+    ('even split between mercurial and git', 'git, hg',): ['Git', 'Mercurial'],
+    ('fossil scm',): ['Fossil SCM'],
+    ('git', 'git with gitlab', 'git/github', 'github', 'giy',): ['Git'],
+    ('git & svn - 50/50', 'svn at work, git at home', 'svn, git',):
+    ['Git', 'Subversion'],
+    ('hg', 'mercurial',): ['Mercurial'],
+    ('perforce', 'source depot',): ['Perforce'],
+    ('starteam',): ['StarTeam'],
+    ('subversion', 'svn', 'tortoisesvn',): ['Subversion'],
+    ('team foundation server', 'tfs'): ['TFS'],
+    ('tfs and git',): ['TFS', 'Git'],
+    ('tfs, subversion',): ['TFS', 'Subversion'],
+    ('unity asset server',): ['Unity Asset Server'],
+    ('vault',): ['Vault'],
+}
 
 
 def read_csv(filename):
@@ -176,12 +294,28 @@ def clean_languages(row):
 
 
 def clean_vcs(row):
-    pass
+    for names, real_name in VCS_MAP.items():
+        vcs = row['vcs']
+        if len(vcs) < 2:
+            if vcs[0].lower().strip() in names:
+                row['vcs'] = real_name
 
 
 def clean_editors(row):
-    pass
+    for names, real_name in EDITOR_MAP.items():
+        p_e = row['primary_editor'][0]
+        if p_e.lower().strip() in names:
+            row['primary_editor'] = real_name
 
+        new_e = []
+        for editor in row['secondary_editor']:
+            e = editor.lower().strip()
+            if e:
+                if e in names:
+                    new_e.extend(real_name)
+                else:
+                    new_e.append(editor)
+        row['secondary_editor'] = new_e
 
 def clean_row(row):
     # Clean up multiple answers
@@ -193,9 +327,9 @@ def clean_row(row):
     # Clean programming languages
     clean_languages(row)
     # Clean VCS
-    #clean_vcs(row)
+    clean_vcs(row)
     # Clean editors
-    #clean_editors(row)
+    clean_editors(row)
 
 
 def clean(rows):
