@@ -52,8 +52,9 @@ LIST_ANSWERS = [
 ]
 
 
-multiple_columns = set(tail[0] for tail in tails(HEADERS)
-                       if len(tail) > 1 and tail[0] == tail[1]) | set(LIST_ANSWERS)
+multiple_columns = set(LIST_ANSWERS) | set(tail[0] for tail in tails(HEADERS)
+                                           if len(tail) > 1
+                                           and tail[0] == tail[1])
 flat_columns = set(header for header in HEADERS
                    if header not in multiple_columns)
 
