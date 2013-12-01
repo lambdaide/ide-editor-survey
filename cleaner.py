@@ -4,6 +4,13 @@ from collections import OrderedDict
 from itertools import izip
 
 
+def tails(iterable):
+    tail = list(iterable)
+    for item in tail:
+        yield tail
+        tail = tail[1:]
+
+
 HEADERS = [
     'hours_work',
     'hours_studying',
@@ -45,9 +52,15 @@ LIST_ANSWERS = [
 ]
 
 
-FEATURES_MAP = {
-    ('')
-}
+multiple_columns = set(tail[0] for tail in tails(HEADERS)
+                       if len(tail) > 1 and tail[0] == tail[1])
+flat_columns = set(header for header in HEADERS
+                   if header not in multiple_columns)
+
+
+# FEATURES_MAP = {
+#     ('')
+# }
 
 
 LANGUAGE_MAP = {
@@ -184,12 +197,12 @@ EDITOR_MAP = {
     ('slickedit',): ['SlickEdit'],
     ('spyder',): ['Spyder'],
     ('sql pro',): ['SequelPro'],
-    ('subime', 'subime text','sublime', 'sublime 2', 'sublime text',
+    ('subime', 'subime text', 'sublime', 'sublime 2', 'sublime text',
      'sublime text  2', 'sublime text 2', 'sublime text 3',
      'sublime text 3 beta', 'sublime text editor', 'sublime-text',
      'sublimetext', 'sublimetext 2', 'sublimetext 3', 'sublimetext2',
      'sublimetext3'): ['Sublime Text'],
-    ('text wrangler', 'textwrangle','textwrangler', ): ['TextWrangler'],
+    ('text wrangler', 'textwrangle', 'textwrangler', ): ['TextWrangler'],
     ('textadept',): ['Textadept'],
     ('textmate', 'mate', 'text mate'): ['TextMate'],
     ('textwrangler/bbedit',): ['TextWrangler', 'BBEdit'],
@@ -217,7 +230,7 @@ VCS_MAP = {
     ('bazaar', 'bzr',): ['Bazaar'],
     ('ca workbench',): ['CA Workbench'],
     ('clearcase',): ['ClearCase'],
-    ('copy and paste', "i don't use one", 'none','my own',
+    ('copy and paste', "i don't use one", 'none', 'my own',
      'omg i dont even know what that is sorry',
      'zip & upload to google drive', 'osx', 'sharepoint',
      'linux', 'debian',): ['None'],
@@ -244,7 +257,7 @@ def read_csv(filename):
     result = []
     with open(filename, 'r') as f:
         reader = csv.reader(f, delimiter=",", quotechar='"')
-        next(reader) # Skip header
+        next(reader)  # Skip header
         for row in reader:
             row_dict = OrderedDict()
             for key, value in izip(HEADERS, row):
@@ -262,6 +275,7 @@ def clean_mp_answers(row):
         '(go to definition, find uses)':
         '(go to definition, find uses)',
     }
+
     def replace(s, mapping):
         for k, v in mapping.items():
             s = s.replace(k, v)
@@ -317,6 +331,7 @@ def clean_editors(row):
                     new_e.append(editor)
         row['secondary_editor'] = new_e
 
+
 def clean_row(row):
     # Clean up multiple answers
     clean_mp_answers(row)
@@ -338,17 +353,43 @@ def clean(rows):
     return rows
 
 
+def get_all_values(rows, header):
+    return sorted(set(value for row in rows
+                            for value in row[header]))
+
+
+def normalize(rows):
+    multiple_columns_map = [(header, get_all_values(rows, header))
+                            for header in multiple_columns]
+    for row in rows:
+        for header in flat_columns:
+            row[header] = row[header][0]
+        for header, values in multiple_columns_map:
+            for value in values:
+                row[header + '.' + value] = False
+            for value in values:
+                if row[header] == value:
+                    row[header + '.' + value] = True
+            del row[header]
+    return rows
+
+
+def get_headers(result_line):
+    return result_line.keys()
+
+
 def stringify(result_line):
-    pass
+    return result_line.values()
 
 
 def main(filename):
     raw = read_csv(filename)
     cleaned = clean(raw)
+    normalized = normalize(cleaned)
 
     writer = csv.writer(sys.stdout, quoting=csv.QUOTE_ALL)
-    writer.writerow(get_headers())
-    for line in cleaned:
+    writer.writerow(get_headers(normalized[0]))
+    for line in normalized:
         writer.writerow(stringify(line))
 
 
