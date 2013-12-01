@@ -197,12 +197,12 @@ EDITOR_MAP = {
     ('slickedit',): ['SlickEdit'],
     ('spyder',): ['Spyder'],
     ('sql pro',): ['SequelPro'],
-    ('subime', 'subime text','sublime', 'sublime 2', 'sublime text',
+    ('subime', 'subime text', 'sublime', 'sublime 2', 'sublime text',
      'sublime text  2', 'sublime text 2', 'sublime text 3',
      'sublime text 3 beta', 'sublime text editor', 'sublime-text',
      'sublimetext', 'sublimetext 2', 'sublimetext 3', 'sublimetext2',
      'sublimetext3'): ['Sublime Text'],
-    ('text wrangler', 'textwrangle','textwrangler', ): ['TextWrangler'],
+    ('text wrangler', 'textwrangle', 'textwrangler', ): ['TextWrangler'],
     ('textadept',): ['Textadept'],
     ('textmate', 'mate', 'text mate'): ['TextMate'],
     ('textwrangler/bbedit',): ['TextWrangler', 'BBEdit'],
@@ -230,7 +230,7 @@ VCS_MAP = {
     ('bazaar', 'bzr',): ['Bazaar'],
     ('ca workbench',): ['CA Workbench'],
     ('clearcase',): ['ClearCase'],
-    ('copy and paste', "i don't use one", 'none','my own',
+    ('copy and paste', "i don't use one", 'none', 'my own',
      'omg i dont even know what that is sorry',
      'zip & upload to google drive', 'osx', 'sharepoint',
      'linux', 'debian',): ['None'],
@@ -257,7 +257,7 @@ def read_csv(filename):
     result = []
     with open(filename, 'r') as f:
         reader = csv.reader(f, delimiter=",", quotechar='"')
-        next(reader) # Skip header
+        next(reader)  # Skip header
         for row in reader:
             row_dict = OrderedDict()
             for key, value in izip(HEADERS, row):
@@ -275,6 +275,7 @@ def clean_mp_answers(row):
         '(go to definition, find uses)':
         '(go to definition, find uses)',
     }
+
     def replace(s, mapping):
         for k, v in mapping.items():
             s = s.replace(k, v)
@@ -329,6 +330,7 @@ def clean_editors(row):
                 else:
                     new_e.append(editor)
         row['secondary_editor'] = new_e
+
 
 def clean_row(row):
     # Clean up multiple answers
