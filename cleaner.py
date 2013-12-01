@@ -123,7 +123,10 @@ FEATURES_MAP = {
      'better debugging integration',
      'debugging',
      'official c++ support',
-     'refactoring',):
+     'refactoring',
+     'something like slime for emacs',
+     'formatting for javascript leading commas',
+     'lisp syntax completion',):
         ['advanced_language_integration'],
     ('it intergrates to build tool(s) that i use',
      'build tools integration',
@@ -155,13 +158,10 @@ FEATURES_MAP = {
         ['remote_editing'],
     ('lower cost',):
         ['low_cost'],
-    ('powerful editing functionality', 'vim emulation mode',
-     'something like slime for emacs'):
+    ('powerful editing functionality', 'vim emulation mode',):
         ['powerful_editing'],
-    ('powerful search & discovery tools; (could be part either of powerful '
-     'editing or adv. lang. integration)',
-     'formatting for javascript leading commas',
-     'lisp syntax completion',):
+    ('powerful search & discovery tools; (could be part either of powerful'
+     ' editing or adv. lang. integration)',):
         ['powerful_editing', 'advanced_language_integration'],
     ('smaller; tighter install',):
         ['lightweight'],
