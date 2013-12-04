@@ -52,15 +52,130 @@ LIST_ANSWERS = [
 ]
 
 
-multiple_columns = set(tail[0] for tail in tails(HEADERS)
-                       if len(tail) > 1 and tail[0] == tail[1])
+multiple_columns = set(LIST_ANSWERS) | set(tail[0] for tail in tails(HEADERS)
+                                           if len(tail) > 1
+                                           and tail[0] == tail[1])
 flat_columns = set(header for header in HEADERS
                    if header not in multiple_columns)
 
 
-# FEATURES_MAP = {
-#     ('')
-# }
+FEATURES_MAP = {
+    ('crossplateform',
+     'cross platform',):
+        ['portability'],
+    ('be less weird',
+     'shorter learningcurve',):
+        ['easy_to_learn'],
+    ('being rock solid',
+     'less bugs',
+     'less errors',
+     'stability',):
+        ['dependability'],
+    ('better built in web browser (serious)r',):
+        ['builtin_web_browser'],
+    ('better colors/theme support',):
+        ['themes'],
+    ('better integration into other; non-development tools'):
+        ['other_integration'],
+    ('cloud support - still annoying that i can\'t just "keep working" on'
+     ' another machine.',
+     'client/server model (share sessions between different instances)',):
+        ['persistent_remote_sessions'],
+    ('composability: components that work '
+     'together \xc3\xa0 la most emacs modes',
+     'easier plugin development',
+     'modern scripting language',
+     'better scripting language',
+     'macros',
+     'better macros',):
+        ['extensibility'],
+    ('console/debugger',):
+        ['console', 'advanced_language_integration'],
+    ('emacs has every feature i want',
+     'i am happy with it',
+     'is there anything vim cant do?',
+     'it has all of those things already',
+     'n/a', 'na', 'none', 'none.', '?',
+     "none i use emacs anything it doesn't do i can make it do",
+     "none. i'm satisfied with its current feature set.",
+     'nothing', 'no idea', 'vim is great', 'abc', 'it has it all (idea)',
+     'kitchen sink', 'pycharm has everything', 'threads',
+     'vimscript+python is enough to add any features i require'):
+        [],
+    ('foss',):
+        ['open_source'],
+    ('interactive console/repl',
+     'proper emacs-style repl',
+     'better console integration',):
+        ['console'],
+    ('it can be used in terminal', 'it can be used it in terminal',
+     'ability to use it in terminal'):
+        ['terminal_usage'],
+    ("it doesn't need to be configured much to be usable",
+     'better default configuration'):
+        ['usable_out_of_the_box'],
+    ('it has advanced language intergration'
+     ' (eg auto-completion; refactoring; building)',
+     'it has advanced language integration'
+     ' (eg auto-completion; refactoring; building)',
+     'advanced language intergration'
+     ' (eg auto-completion; refactoring; building)',
+     'debugger features',
+     'better debugging integration',
+     'debugging',
+     'official c++ support',
+     'refactoring',
+     'something like slime for emacs',
+     'formatting for javascript leading commas',
+     'lisp syntax completion',):
+        ['advanced_language_integration'],
+    ('it intergrates to build tool(s) that i use',
+     'build tools integration',
+     'better working build tools',
+     'integration to build tool(s) that i use',):
+        ['build_tool_integration'],
+    ('it intergrates with version control system',
+     'integration with version control system',):
+        ['version_control_integration'],
+    ('it is very configurable',
+     'configurability',
+     'easier configuration',
+     'high configurability; though very tedious to extensively customize',):
+        ['configurability'],
+    ('it provides good tools for navigating the code'
+     ' (eg go to definition; find uses)',
+     'tools to navigate the code (go to definition; find uses)',):
+        ['code_navigation'],
+    ('it starts up and works very fast',
+     'faster start up and overall performance',
+     'asyncronous operations',):
+        ['speed'],
+    ('it supports many programming languages',
+     'support for many programming languages',):
+        ['many_languages'],
+    ('kio slaves',
+     'ssh/ftp integration',
+     'better remote code',):
+        ['remote_editing'],
+    ('lower cost',):
+        ['low_cost'],
+    ('powerful editing functionality', 'vim emulation mode',):
+        ['powerful_editing'],
+    ('powerful search & discovery tools; (could be part either of powerful'
+     ' editing or adv. lang. integration)',):
+        ['powerful_editing', 'advanced_language_integration'],
+    ('smaller; tighter install',):
+        ['lightweight'],
+    ('snippets',):
+        ['code_generation'],
+    ('splits',):
+        ['ui'],
+    ('there are lots of plugins available',
+     'rich plugins ecosystem',
+     'non-java plugins',
+     'specific plugins (eg. better android support)',):
+        ['many_plugins'],
+}
 
 
 LANGUAGE_MAP = {
@@ -372,9 +487,17 @@ def read_csv(filename):
 def clean_mp_answers(row):
     replacements = {
         '(eg auto-completion, refactoring, building)':
-        '(eg auto-completion refactoring building)',
+            '(eg auto-completion; refactoring; building)',
+        '(eg. go to definition, find uses)':
+            '(eg go to definition; find uses)',
         '(go to definition, find uses)':
-        '(go to definition, find uses)',
+            '(go to definition; find uses)',
+        'better integration into other, non-development tools':
+            'better integration into other; non-development tools',
+        'High configurability, though very tedious to extensively customize':
+            'High configurability; though very tedious to extensively customize',
+        'smaller, tighter install':
+            'smaller; tighter install'
     }
 
     def replace(s, mapping):
@@ -389,6 +512,20 @@ def clean_mp_answers(row):
 def create_lists(row):
     for list_answer in LIST_ANSWERS:
         row[list_answer] = [r.strip() for r in row[list_answer][0].split(',')]
+
+
+def clean_features(row):
+    for names, real_name in FEATURES_MAP.items():
+        for header in ('features_value', 'features_want'):
+            new_values = []
+            for value in row[header]:
+                v = value.lower().strip()
+                if v:
+                    if v in names:
+                        new_values.extend(real_name)
+                    else:
+                        new_values.append(value.strip())
+            row[header] = new_values
 
 
 def clean_working_hours(row):
@@ -436,6 +573,8 @@ def clean_row(row):
     clean_mp_answers(row)
     # Create lists where applicable
     create_lists(row)
+    # Clean valued and wanted features
+    clean_features(row)
     # Unify working hours
     #clean_working_hours(row)
     # Clean programming languages
