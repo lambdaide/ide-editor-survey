@@ -469,6 +469,45 @@ VCS_MAP = {
 }
 
 
+INTEGRATION_MAP = {
+    ('aesthetics',): ['ui'],
+    ('auto-completion', 'intellisense',): ['auto_completion'],
+    ('better support for more languages',
+     'better auto-completion in javascript with libraries.',):
+    ['many_languages'],
+    ('build tool(s) integration',): ['build_tool_integration'],
+    ('code formatting',): ['code_formatting'],
+    ('code generation',): ['code_generation'],
+    ('debugging', 'linting tools integration', 'find bugs',): ['debugging'],
+    ('documentation for language or libraries inside the editor',): ['docs'],
+    ('extensibility', 'better macros', 'macros', 'plugins',
+     'id like grammar based language mode definitions', ): ['extensibility'],
+    ('fast',): ['speed'],
+    ('i prefer minimal integration.',): ['lightweightness'],
+    ('interactive console/repl',): ['console'],
+    ('language aware navigation and editing', 'navigation', 'code navigation',
+     'better file navigation', 'better file navigation',
+     'project navigation',
+     'semantics searching capabilities'): ['code_navigation'],
+    ('n/a', 'na', 'nil', 'no idea', 'none', 'none of the above',
+     'none of these', 'none?', 'nothing', 'nothing. vs has everything i need.',
+     'pretty much has all of the above', 'vim is great', 'i am happy', 'done',
+     'things are sufficiently provided by plugins', 'cant think of any',
+     'emacs has all of this', 'it has everything', '???', 'all are quite good',
+     'it has it all (idea)', 'im really happy with all of these in idea',):
+    ['none'],
+    ('refactoring',): ['refactoring'],
+    ('speed and easy of use', 'speed of loading',
+     'performance improvement',): ['speed'],
+    ('stability',): ['dependability'],
+    ('syntax highlighting',): ['syntax_highlighting'],
+    ('test integration',): ['test_integration'],
+    ('vcs integration', 'version control integration',
+     'version control integration is very poor',): ['vcs integration'],
+    ('vim suppor'): ['powerful_editing'],
+}
+
+
 def read_csv(filename):
     result = []
     with open(filename, 'r') as f:
@@ -528,6 +567,20 @@ def clean_features(row):
             row[header] = new_values
 
 
+def clean_integrations(row):
+    for names, real_name in INTEGRATION_MAP.items():
+        for header in ('integration_value', 'integration_want'):
+            new_values = []
+            for value in row[header]:
+                v = value.lower().strip()
+                if v:
+                    if v in names:
+                        new_values.extend(real_name)
+                    else:
+                        new_values.append(value.strip())
+            row[header] = new_values
+
+
 def clean_working_hours(row):
     pass
 
@@ -575,6 +628,7 @@ def clean_row(row):
     create_lists(row)
     # Clean valued and wanted features
     clean_features(row)
+    clean_integrations(row)
     # Unify working hours
     #clean_working_hours(row)
     # Clean programming languages
