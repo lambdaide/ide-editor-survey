@@ -24,8 +24,9 @@ HEADERS = [
     'alternative_primary',
     'commercial_use',
     'commercial_potential_use',
-    'commercial_price',
+    '_', # Seems to be there is an empty column
     'integration_want',
+    'commercial_price',
 ]
 
 
@@ -541,3 +542,44 @@ SECONDARY_REASON_MAP = {
      'only use others if i absolutely have to',
      'occasionally', 'too many questions',): [],
  }
+
+
+COMMERCIAL_USE = {
+    'Yes, I have personally bought it': 'self',
+    'Yes, my employer bought it': 'employer',
+    'No, but I tried trial versions': 'trial',
+    'No, never': 'never',
+}
+
+
+COMMERCIAL_USE_POTENTIAL = {
+    'Yes, I would buy it myself': 'self',
+    'Yes, if my employer buys it for me': 'employer',
+    'No': 'never'
+}
+
+
+VCS_USE = {
+    'From the primary editor': 'primary_editor',
+    'From one of the non-primary editors' : 'secondary_editor',
+    'From some other application': 'other_app',
+    'Directly through terminal' : 'terminal',
+    'Other' : 'other'
+}
+
+
+CUSTOMIZATION = {
+    "It's almost the same from the stock configuration": 'low',
+    "There is some configuration and couple of third-party plugins": 'medium',
+    "It is extensively configured and I have lots of third-party plugins": 'high'
+}
+
+
+COMPANY_PROGRAMMING_INVOLVEMENT = {
+    'Is primarily doing programming': 'software',
+    "Does programming as part of it's core activities": 'software_related',
+    'Sometimes supports other activities with programming or IT': 'other',
+    'I am a researcher': 'researcher',
+    'I am a student or unemployed': 'student_unemployed',
+    'My primary job is something else than programming': 'non_programmer'
+}
