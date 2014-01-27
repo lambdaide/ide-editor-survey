@@ -126,6 +126,15 @@ def clean_editors(row):
             row[header] = new_e
 
 
+def clean_simple(name_map, header, row):
+    value = row[header]
+    if value:
+        value = value[0]
+        new_value = name_map.get(value)
+        if new_value:
+            row[header] = new_value
+
+
 def clean_row(row):
     clean_mp_answers(row)
     create_lists(row)
@@ -138,6 +147,14 @@ def clean_row(row):
     clean_languages(row)
     clean_vcs(row)
     clean_editors(row)
+
+    clean_simple(COMMERCIAL_USE, 'commercial_use', row)
+    clean_simple(COMMERCIAL_USE_POTENTIAL, 'commercial_potential_use', row)
+    clean_simple(VCS_USE, 'vcs_use', row)
+    clean_simple(CUSTOMIZATION, 'customization', row)
+    clean_simple(COMPANY_PROGRAMMING_INVOLVEMENT,
+                 'company_programming_involvement',
+                 row)
 
 
 def clean(rows):
