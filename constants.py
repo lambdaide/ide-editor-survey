@@ -486,3 +486,58 @@ INTEGRATION_MAP = {
      'version control integration is very poor',): ['vcs integration'],
     ('vim suppor'): ['powerful_editing'],
 }
+
+
+SECONDARY_REASON_MAP = {
+    ('it supports some of the languages i use better than my primary editor',
+     'it is a also framework to develop rich client applications',
+     'visual studio intellisense', 'platform specific',
+     'support for a different subset of languages.',
+     'better debugging', 'debug', 'debuggin', 'debugging',
+     'interactive debugger', 'rubymine has an incredible integrated debugger',):
+    ['better_language_support'],
+    ('it supports the build tools or building proccess that i use better',
+     'apple dictates', 'for windows programming', 'run better on windows',
+     'i have to use it for ios development', 'ios development requires xcode',
+    'supports a different os',):
+    ['better_build_support'],
+    ('it can be used from terminal',):
+    ['terminal'],
+    ("it doesn't build project on every save", "it's better for editing text.",
+     "it's faster to us!e for small editing", 'fast startup', "it's fast.",
+     'sometimes domt want to clog up my buffers for a small change',):
+    ['faster_for_small'],
+    ('i use it for editing code on remote servers',
+     'not available on remote server',):
+    ['remote_editing'],
+    ('available on office', 'forced to use eclipse by work',
+     'i can use them from my work pc.', 'i had to', 'i have to',
+     "i'm forced to do so.", "i'm its current primary developer.",
+     'idea was paid by my startup', 'no choice',
+     'required by my client', 'working on peer reviews',
+     'the team uses netbeans', 'team uses it',
+     'it is not installed on some systems', "i'm on other peoples' computers",
+     'different os at home', 'force majeure', 'i use it in windows',
+     'i use them on a system where my primary editor is not available.',
+     "my editor isn't available", 'no vim installed?',
+     'pair programming with people who use other editors',
+     'pairing with someone unfamiliar with vim.',):
+    ['primary_not_available'],
+    ('better file search ability', 'better find/replace with regex',
+     'better search and navigation across files',
+     "doen't leave the ~ files around", 'faster/better file finder',
+     'it has some tools unavailable in my primary',
+     'non-build features like ediff and dired',
+     'multiple cursor select!', 'it looks nicer',
+     'interactive repl', 'graphics',
+     'advanced text editing features', 'allows for better free form writing',):
+    ['better_other_feature'],
+    ('but easier in st3 or idea.', 'curiosity', 'for the exercise',):
+    ['other'],
+    ("i don't use other editors.", "i don't use anything else",
+     "i don't use other editors/ides", 'i very rarely use others.',
+     "i haven't explored vim completely as of now."
+     " those things are possible in vim", 'only use primary',
+     'only use others if i absolutely have to',
+     'occasionally', 'too many questions',): [],
+ }

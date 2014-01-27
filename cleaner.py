@@ -45,17 +45,17 @@ def read_csv(filename):
 def clean_mp_answers(row):
     replacements = {
         '(eg auto-completion, refactoring, building)':
-            '(eg auto-completion; refactoring; building)',
+        '(eg auto-completion; refactoring; building)',
         '(eg. go to definition, find uses)':
-            '(eg go to definition; find uses)',
+        '(eg go to definition; find uses)',
         '(go to definition, find uses)':
-            '(go to definition; find uses)',
+        '(go to definition; find uses)',
         'better integration into other, non-development tools':
-            'better integration into other; non-development tools',
+        'better integration into other; non-development tools',
         'High configurability, though very tedious to extensively customize':
-            'High configurability; though very tedious to extensively customize',
+        'High configurability; though very tedious to extensively customize',
         'smaller, tighter install':
-            'smaller; tighter install'
+        'smaller; tighter install'
     }
 
     def replace(s, mapping):
@@ -72,23 +72,9 @@ def create_lists(row):
         row[list_answer] = [r.strip() for r in row[list_answer][0].split(',')]
 
 
-def clean_features(row):
-    for names, real_name in FEATURES_MAP.items():
-        for header in ('features_value', 'features_want'):
-            new_values = []
-            for value in row[header]:
-                v = value.lower().strip()
-                if v:
-                    if v in names:
-                        new_values.extend(real_name)
-                    else:
-                        new_values.append(value.strip())
-            row[header] = new_values
-
-
-def clean_integrations(row):
-    for names, real_name in INTEGRATION_MAP.items():
-        for header in ('integration_value', 'integration_want'):
+def clean_by_map(name_map, headers, row):
+    for names, real_name in name_map.items():
+        for header in headers:
             new_values = []
             for value in row[header]:
                 v = value.lower().strip()
@@ -141,20 +127,16 @@ def clean_editors(row):
 
 
 def clean_row(row):
-    # Clean up multiple answers
     clean_mp_answers(row)
-    # Create lists where applicable
     create_lists(row)
-    # Clean valued and wanted features
-    clean_features(row)
-    clean_integrations(row)
-    # Unify working hours
+    clean_by_map(FEATURES_MAP, ('features_value', 'features_want'), row)
+    clean_by_map(INTEGRATION_MAP,
+                 ('integration_value', 'integration_want'),
+                 row)
+    clean_by_map(SECONDARY_REASON_MAP, ('secondary_editor_reason',), row)
     #clean_working_hours(row)
-    # Clean programming languages
     clean_languages(row)
-    # Clean VCS
     clean_vcs(row)
-    # Clean editors
     clean_editors(row)
 
 
