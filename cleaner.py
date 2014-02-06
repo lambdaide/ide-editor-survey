@@ -132,7 +132,18 @@ def clean_simple(name_map, header, row):
         value = value[0]
         new_value = name_map.get(value)
         if new_value:
-            row[header] = new_value
+            row[header] = [new_value]
+
+
+def clean_hours(row):
+    for hour_type in ['hours_work', 'hours_studying', 'hours_hobby']:
+        h = row[hour_type][0]
+        if h:
+            try:
+                row[hour_type] = [float(h)]
+            except ValueError:
+                h = h.split('-')[0]
+                row[hour_type] = [float(h)]
 
 
 def clean_row(row):
@@ -143,7 +154,8 @@ def clean_row(row):
                  ('integration_value', 'integration_want'),
                  row)
     clean_by_map(SECONDARY_REASON_MAP, ('secondary_editor_reason',), row)
-    #clean_working_hours(row)
+    clean_by_map(NOT_SWITCHING_REASONS, ('not_switching_reasons',), row)
+    clean_hours(row)
     clean_languages(row)
     clean_vcs(row)
     clean_editors(row)

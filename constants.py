@@ -583,3 +583,58 @@ COMPANY_PROGRAMMING_INVOLVEMENT = {
     'I am a student or unemployed': 'student_unemployed',
     'My primary job is something else than programming': 'non_programmer'
 }
+
+
+NOT_SWITCHING_REASONS = {
+    ("don't know of a better editor", "i don't feel like switching at all",
+     "don't know of any easier/better ones", "i like my editor",
+     "i don't feel there is anything better", "i love my editor",
+     "i don't like investing time in tools that would disappoint in the future",
+     "grand unified buffer design of emacs currently unmatched",
+     "i've been using many text editors but vim is where the journey ends",
+     "i tried many before selecting this one", "modal editing is awesome",
+     "nothing better", "there is no reason to switch actually.",
+     "no point; it is the same wasteland everywhere else as well",
+     "vim is best for what i do", "very happy with my editor",
+     "they have more complications than i need",
+     "sublime satisfies all my needs",
+     "my current editor (st2) has much better text editing features than rubymine",
+     "other's ide ui is awful", "no good free php editor",
+ ):
+    ["mine_better"],
+    ("android studio is even less stable", "cannot be used in terminal",
+     "debugging experience", "doesn't run in the terminal",
+     "i've not found an editor with the range of features that i like to use.",
+     "vim motion", "other editors lack some features that my editor have",):
+    ["other_missing_features"],
+    ("cost", "it's not free ( idea )", "money?", 
+     "other editors cost money. my current one provides what" +
+     " i need and like for free.",): ["cost"],
+    ("learning curve", "muscle memory", "my fingers know what to do in vim.",
+     "too much effort learning new editors",):
+    ["effort_learning"],
+    ("too much effort configuring new editors",): ["effort_configuring"],
+    ("compiler integration",
+     "de-facto verilog pre-processor is emacs lisp based",
+     "most options lack (or has bad) support for several languages",
+     "my workflow is too integrated into my current editor",
+     "work in environments that don't support full ides",
+     "other editors don't support my languages of choice very well",
+     "other editors support programming languages that i use worse",
+     "theres nothing further down the road for ruby/rails development currently",
+     "setting up compilers is too much of a hassle with new editors",
+     "no terminal support", "my course requires that i use bluej",):
+    ["supports_better"],
+    ("i want a fast responding editor/ide", "ides are much slower!",
+     "other ides are too damned slow", "slow startup/use", "speed",
+     "speed of editing", "there are all to slow",
+     "ides are too complex; too magical", "other editors are more heavy weight",
+     "too unstable and inconsistent", "to overloaded",):
+    ["speed"],
+    ("just switched", "i am switching! i'm learning vim.",
+     "just started getting comfortable int my current ide.",): ["just_switched"],
+    ("not enough configurability", "lack of configurability",
+     "other ide not extensible through perl",):
+    ['configurability'],
+    ("stop",): []
+}
